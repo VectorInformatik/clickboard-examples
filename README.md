@@ -11,6 +11,10 @@ Datasheet zum A/D-Converter: http://ww1.microchip.com/downloads/en/devicedoc/21
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/0f322c96-dc77-45bc-84b7-314389b9e4e5)
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/a62aaf96-48f6-445b-9fe0-92962d6ceb10)
 
+Thumbstick Layout:
+![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/7353b62a-c660-4fb1-bcbb-728389c9526b)
+
+
 ## 8800 RETRO CLICK
 
 ## MPU 9DOF CLICK
