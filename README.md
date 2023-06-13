@@ -15,6 +15,9 @@ Datasheet zum A/D-Converter: http://ww1.microchip.com/downloads/en/devicedoc/212
 Thumbstick Layout:
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/7353b62a-c660-4fb1-bcbb-728389c9526b)
 
+
+Code example (read thumbstick input):
+
 ```c++
 #include <SPI.h>
 
@@ -51,7 +54,8 @@ void get_user_input()
   int vert = 0;
   int hor = 0;
 
-  // Use thresholds to smooth input
+  // Use thresholds to convert input into (binary) directions
+  // This is not required but was used to counter noisy input.
   if (value_0 > 3500) vert = -1;
   else if (value_0 < 500) vert = 1;
   else vert = 0;
@@ -83,6 +87,8 @@ void loop()
 ```
 
 ## 8800 RETRO CLICK
+
+Code example (flash the character '!' on and off):
 
 ```c++
 #include <Wire.h>
@@ -184,6 +190,36 @@ void loop()
 
 
 ## MPU 9DOF CLICK
+Library and examples: https://github.com/hideakitai/MPU9250
+
+Code example (get roll, pitch and yaw):
+
+```c++
+#include "MPU9250.h"
+
+MPU9250 mpu;
+
+void setup() {
+    Serial.begin(9600);
+    Wire.begin();
+    mpu.setup(0x68);
+}
+
+void loop() {
+  if (mpu.update()) {
+    print_roll_pitch_yaw();
+  }
+}
+
+void print_roll_pitch_yaw() {
+    Serial.print("Yaw, Pitch, Roll: ");
+    Serial.print(mpu.getYaw(), 2);
+    Serial.print(", ");
+    Serial.print(mpu.getPitch(), 2);
+    Serial.print(", ");
+    Serial.println(mpu.getRoll(), 2);
+}
+```
 
 ## PROXIMITY 18 CLICK
 
@@ -197,6 +233,8 @@ https://github.com/MikroElektronika/mikrosdk_click_v2
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/4107adeb-8cf2-4803-934a-0be1f3d37a52)
 
 ## I2C scanner
+
+Run this code snipped to get the i2c addresses of the connected devices:
 
 ```c++
 #include <Wire.h>
