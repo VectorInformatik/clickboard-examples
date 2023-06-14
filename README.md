@@ -54,6 +54,131 @@ Component description: https://www.mikroe.com/touchpad-4-click
 
 Controller datasheet: https://www.azoteq.com/images/stories/pdf/iqs7211a_datasheet.pdf
 
+Code example (not perfect):
+
+```c++
+#include <Wire.h>
+
+#define ADDR 0x56
+#define INT_PIN 18
+
+#define LEFT 0
+#define RIGHT 1
+#define DOWN 2
+#define UP 3
+#define SINGLE_TAP 4
+#define PRESS_AND_HOLD 5
+
+#define GESTURE_READ_FAILED 999
+
+#define ADDR_INFO_FLAGS 0x10
+#define ADDR_GESTURES 0x11
+#define ADDR_FINGER_X 0x14
+#define ADDR_FINGER_Y 0x15
+#define ADDR_TOUCH_STRENGTH 0x16
+#define ADDR_FINGER_AREA 0x17
+
+
+int readRegister(int addr)
+{
+  int data = 0;
+
+  Wire.beginTransmission(ADDR);
+  Wire.write(addr); // Gestures register
+  Wire.endTransmission(0);
+
+  // Read gestures
+  Wire.requestFrom(ADDR, 2);
+  if (Wire.available() >= 2) {
+    byte byte1 = Wire.read();
+    byte byte2 = Wire.read();
+    
+    data = (byte2 << 8) | byte1;
+  }
+  return data;
+}
+
+int readGestures()
+{
+  int data = readRegister(ADDR_GESTURES);
+
+  if (data & 1) return SINGLE_TAP;
+  if (data & 2) return PRESS_AND_HOLD;
+  if (data & 4) return RIGHT;
+  if (data & 8) return LEFT;
+  if (data & 16) return DOWN;
+  if (data & 32) return UP;
+  return GESTURE_READ_FAILED;
+}
+
+int readTouchStrength()
+{
+  int data = readRegister(ADDR_TOUCH_STRENGTH);
+  return data;
+}
+
+int readFingerX()
+{
+  int data = readRegister(ADDR_FINGER_X);
+  return data;
+}
+
+int readFingerY()
+{
+  int data = readRegister(ADDR_FINGER_Y);
+  return data;
+}
+
+void ISR()
+{
+  int gesture = readGestures();
+
+  switch (gesture)
+  {
+    case LEFT:
+      Serial.println("Left");
+      break;
+    case RIGHT:
+      Serial.println("Right");
+      break;
+    case UP:
+      Serial.println("Up");
+      break;
+    case DOWN:
+      Serial.println("Down");
+      break;
+    case SINGLE_TAP:
+      Serial.println("Single tap");
+      break;
+    case PRESS_AND_HOLD:
+      Serial.println("Press and hold");
+      break;
+    default:
+      break;
+  }
+}
+
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(INT_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(INT_PIN), ISR, FALLING);
+  Wire.begin();
+
+  // Config
+  Wire.beginTransmission(ADDR);
+  Wire.write(0x51);
+  Wire.write(0x4710);
+  Wire.endTransmission();
+}
+
+void loop()
+{
+  
+}
+```
+
 ## OLED C CLICK
 
 Component description: https://www.mikroe.com/oled-c-click
