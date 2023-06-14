@@ -1,10 +1,57 @@
+**This file provides useful information on how to use the feather click shield**
+
+# Contents
+1. [Arduino IDE setup](#arduino-ide-setup)
+2. [Board setup](#board-setup)
+3. [References](#references)
+    * [Feather Click Shield](#feather-click-shield)
+    * [Adafruit Feather M4 CAN](#adafruit-feather-m4-can)
+    * [TOUCHPAD 4 CLICK](#touchpad-4-click)
+    * [OLED C CLICK](#oled-c-click)
+    * [SMART MIC CLICK](#smart-mic-click)
+    * [THUMBSTICK CLICK](#thumbstick-click)
+    * [8800 RETRO CLICK](#8800-retro-click)
+    * [MPU 9DOF CLICK](#mpu-9dof-click)
+    * [PROXIMITY 18 CLICK](#proximity-18-click)
+    * [RADAR CLICK](#radar-click)
+    * [MikroSDK](#mikrosdk)
+    * [I2C Scanner](#i2c-scanner)
+
+# Arduino IDE setup
+
+1. Got to `File > Preferences` and enter `https://adafruit.github.io/arduino-board-index/package_adafruit_index.json` into the **Additional Boards Manager URLs**.
+2. Click `OK`.
+3. Install `Adafruit SAMD Boards` in the **Boards Manager**.
+4. Click `Tools > Board > Adafruit SAMD Boards` and selecte the `Adafruit Feather M4 CAN`.
+
+See https://learn.adafruit.com/adafruit-feather-m4-can-express/arduino-ide-setup for more information.
+
+# Board setup
+
+1. Place your `Adafruit feather M4 CAN` in the center of the `Feather click shield`.
+2. Place your `Click Boards` into the `mikroBUS` sockets.
+3. Connect a USB-C cable into to your computer and directly to the `Feather M4 CAN` (the **upper** USB-C port).
+
 # References
 
+**This section provides useful links, images and code snippets for every component and click board.**
 
-## Touchpad 4 Click
+## Feather Click Shield
+
+**Pinout of the feather click shield:**
+
+![grafik](https://www.mikroe.com/img/images/feather-inner-2.png)
+
+## Adafruit Feather M4 CAN 
+
+**Pinout of the adafruit feather m4 can:**
+
+![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/4107adeb-8cf2-4803-934a-0be1f3d37a52)
+
+## TOUCHPAD 4 CLICK
 
 Component description: https://www.mikroe.com/touchpad-4-click
-Controller datasheet: http://download.mikroe.com/documents/datasheets/IQS7211A%20Datasheet.pdf
+Controller datasheet: https://www.azoteq.com/images/stories/pdf/iqs7211a_datasheet.pdf
 
 Code example (read gestures):
 
@@ -16,13 +63,131 @@ Code example (read gestures):
 ## OLED C CLICK
 
 Component description: https://www.mikroe.com/oled-c-click
-Graphics driver datasheet: https://download.mikroe.com/documents/datasheets/ssd1351-revision-1.3.pdf
+Graphics driver datasheet: https://newhavendisplay.com/content/app_notes/SSD1351.pdf
+
 Library: https://github.com/adafruit/Adafruit-SSD1351-library (Can be found in Library Manager. Search: Adafruit SSD1351)
+
+**NOTE: This library doesn't support the 96x96 OLED display. Everything will be offset. No better library was found.**
 
 Code example (draw different shapes):
 
 ```c++
+// Screen dimensions. True dimensions are 96x96. This is a workaround
+#define SCREEN_WIDTH  128
+#define SCREEN_HEIGHT 128
 
+// Using Microbus 2
+#define SCLK_PIN 25
+#define MOSI_PIN 24
+#define DC_PIN   13
+#define CS_PIN   10
+#define RST_PIN  12
+#define EN_PIN   11
+
+// Color definitions
+#define	BLACK           0x0000
+#define	BLUE            0x001F
+#define	RED             0xF800
+#define	GREEN           0x07E0
+#define CYAN            0x07FF
+#define MAGENTA         0xF81F
+#define YELLOW          0xFFE0  
+#define WHITE           0xFFFF
+
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1351.h>
+#include <SPI.h>
+
+Adafruit_SSD1351 tft = Adafruit_SSD1351(SCREEN_WIDTH, SCREEN_HEIGHT, CS_PIN, DC_PIN, MOSI_PIN, SCLK_PIN, RST_PIN);  
+
+//Adafruit_SSD1351 tft = Adafruit_SSD1351(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, CS_PIN, DC_PIN, RST_PIN);
+
+//Adafruit_SSD1351 tft = Adafruit_SSD1351(CS_PIN, DC_PIN, MOSI_PIN, SCLK_PIN, RST_PIN);  
+
+void testOLED()
+{
+  // Single pixel
+  tft.drawPixel(tft.width()/2, tft.height()/2, GREEN);
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // lines
+  for (uint16_t x=0; x < tft.width()-1; x+=6) {
+    tft.drawLine(0, 0, x, tft.height()-1, WHITE);
+  }
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // fast lines
+  for (uint16_t y=0; y < tft.height()-1; y+=5) {
+    tft.drawFastHLine(0, y, tft.width()-1, WHITE);
+  }
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // text
+  tft.setCursor(0,0);
+  tft.setTextColor(WHITE);
+  tft.print("Hi my name is max");
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // rectangles
+  for (uint16_t x=0; x < tft.height()-1; x+=6) {
+    tft.drawRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, WHITE);
+  }
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // fill rectangles
+  for (uint16_t x=tft.height()-1; x > 6; x-=6) {
+    tft.fillRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, WHITE);
+    tft.drawRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, GREEN);
+  }
+  delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  uint8_t radius = 4;
+
+  // circles
+  for (uint8_t x=0; x < tft.width()-1+radius; x+=radius*2) {
+    for (uint8_t y=0; y < tft.height()-1+radius; y+=radius*2) {
+      tft.drawCircle(x, y, radius, WHITE);
+    }
+  }
+  delay(3000);
+
+  // fill circles
+  tft.fillScreen(BLACK);
+
+  for (uint8_t x=radius; x < tft.width()-1; x+=radius*2) {
+    for (uint8_t y=radius; y < tft.height()-1; y+=radius*2) {
+      tft.fillCircle(x, y, radius, WHITE);
+    }
+  }  
+  delay(3000);
+}
+
+
+void setup(void) {
+  Serial.begin(9600);
+
+  // Set enable pin to high
+  pinMode(EN_PIN, OUTPUT);
+  digitalWrite(EN_PIN, HIGH);
+
+  tft.begin();
+}
+
+void loop() {
+  testOLED();
+}
 ```
 
 ## SMART MIC CLICK
@@ -34,6 +199,7 @@ Acoustic processor datasheet: http://download.mikroe.com/documents/datasheets/IA
 
 Component description: https://www.mikroe.com/thumbstick-click
 Datasheet zum A/D-Converter: http://ww1.microchip.com/downloads/en/devicedoc/21298e.pdf
+
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/0f322c96-dc77-45bc-84b7-314389b9e4e5)
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/a62aaf96-48f6-445b-9fe0-92962d6ceb10)
 
@@ -112,6 +278,9 @@ void loop()
 ```
 
 ## 8800 RETRO CLICK
+
+Component description: https://www.mikroe.com/8800-retro-click
+LED driver datasheet: https://ams.com/documents/20143/36005/AS1115_DS000206_1-00.pdf
 
 Code example (flash the character '!' on and off):
 
@@ -215,6 +384,9 @@ void loop()
 
 
 ## MPU 9DOF CLICK
+
+Component description: https://www.mikroe.com/mpu-9dof-click
+Datasheet: https://invensense.tdk.com/wp-content/uploads/2015/02/PS-MPU-9250A-01-v1.1.pdf
 Library and examples: https://github.com/hideakitai/MPU9250
 
 Code example (get roll, pitch and yaw):
@@ -248,6 +420,7 @@ void print_roll_pitch_yaw() {
 
 ## PROXIMITY 18 CLICK
 
+Component description: https://www.mikroe.com/proximity-18-click
 Datasheet: https://download.mikroe.com/documents/datasheets/VCNL3036X01_datasheet.pdf
 Install library: https://github.com/JenertsA/VCNL3040_Proximity_Sensor_Library (Available in Library Manager of Arduino Ide. Search: VCNL3040)
 **NOTE: Go to VCNL3040.h and change VCNL3040_DEV_ADDRESS from 0x60 to 0x41.**
@@ -278,14 +451,18 @@ void loop()
 
 ## RADAR CLICK
 
+Component description: https://www.mikroe.com/radar-click
 Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
 
-## MikroSDK2
-https://github.com/MikroElektronika/mikrosdk_click_v2
+Code example:
 
-## Adafruit Feather M4CAN Express 
+```c++
 
-![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/4107adeb-8cf2-4803-934a-0be1f3d37a52)
+```
+
+## MikroSDK
+Libraries for click boards by MIKROE (**NOT compatible with our board but can be useful**): https://github.com/MikroElektronika/mikrosdk_click_v2
+
 
 ## I2C scanner
 
