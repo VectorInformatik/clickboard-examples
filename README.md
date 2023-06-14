@@ -280,7 +280,7 @@ void loop()
 
 Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
 
-## MikroSDK
+## MikroSDK2
 https://github.com/MikroElektronika/mikrosdk_click_v2
 
 ## Adafruit Feather M4CAN Express 
