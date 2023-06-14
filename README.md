@@ -51,11 +51,13 @@ See https://learn.adafruit.com/adafruit-feather-m4-can-express/arduino-ide-setup
 ## TOUCHPAD 4 CLICK
 
 Component description: https://www.mikroe.com/touchpad-4-click
+
 Controller datasheet: https://www.azoteq.com/images/stories/pdf/iqs7211a_datasheet.pdf
 
 ## OLED C CLICK
 
 Component description: https://www.mikroe.com/oled-c-click
+
 Graphics driver datasheet: https://newhavendisplay.com/content/app_notes/SSD1351.pdf
 
 Library: https://github.com/adafruit/Adafruit-SSD1351-library (Can be found in Library Manager. Search: Adafruit SSD1351)
@@ -186,11 +188,13 @@ void loop() {
 ## SMART MIC CLICK
 
 Component description: https://www.mikroe.com/smart-mic-click
+
 Acoustic processor datasheet: http://download.mikroe.com/documents/datasheets/IA611_datasheet.pdf
 
 ## THUMBSTICK CLICK
 
 Component description: https://www.mikroe.com/thumbstick-click
+
 Datasheet zum A/D-Converter: http://ww1.microchip.com/downloads/en/devicedoc/21298e.pdf
 
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/0f322c96-dc77-45bc-84b7-314389b9e4e5)
@@ -273,6 +277,7 @@ void loop()
 ## 8800 RETRO CLICK
 
 Component description: https://www.mikroe.com/8800-retro-click
+
 LED driver datasheet: https://ams.com/documents/20143/36005/AS1115_DS000206_1-00.pdf
 
 Code example (flash the character '!' on and off):
@@ -379,7 +384,9 @@ void loop()
 ## MPU 9DOF CLICK
 
 Component description: https://www.mikroe.com/mpu-9dof-click
+
 Datasheet: https://invensense.tdk.com/wp-content/uploads/2015/02/PS-MPU-9250A-01-v1.1.pdf
+
 Library and examples: https://github.com/hideakitai/MPU9250
 
 Code example (get roll, pitch and yaw):
@@ -414,7 +421,9 @@ void print_roll_pitch_yaw() {
 ## PROXIMITY 18 CLICK
 
 Component description: https://www.mikroe.com/proximity-18-click
+
 Datasheet: https://download.mikroe.com/documents/datasheets/VCNL3036X01_datasheet.pdf
+
 Install library: https://github.com/JenertsA/VCNL3040_Proximity_Sensor_Library (Available in Library Manager of Arduino Ide. Search: VCNL3040)
 **NOTE: Go to VCNL3040.h and change VCNL3040_DEV_ADDRESS from 0x60 to 0x41.**
 
@@ -445,11 +454,12 @@ void loop()
 ## RADAR CLICK
 
 Component description: https://www.mikroe.com/radar-click
+
 Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
 
 ## MikroSDK
-Libraries for click boards by MIKROE (**NOT compatible with our board but can be useful**): https://github.com/MikroElektronika/mikrosdk_click_v2
 
+Libraries for click boards by MIKROE (**NOT compatible with our board but can be useful**): https://github.com/MikroElektronika/mikrosdk_click_v2
 
 ## I2C scanner
 
