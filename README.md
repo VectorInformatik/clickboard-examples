@@ -3,11 +3,36 @@
 
 ## Touchpad 4 Click
 
+Component description: https://www.mikroe.com/touchpad-4-click
+Controller datasheet: http://download.mikroe.com/documents/datasheets/IQS7211A%20Datasheet.pdf
+
+Code example (read gestures):
+
+```c++
+
+```
+
+
 ## OLED C CLICK
+
+Component description: https://www.mikroe.com/oled-c-click
+Graphics driver datasheet: https://download.mikroe.com/documents/datasheets/ssd1351-revision-1.3.pdf
+Library: https://github.com/adafruit/Adafruit-SSD1351-library (Can be found in Library Manager. Search: Adafruit SSD1351)
+
+Code example (draw different shapes):
+
+```c++
+
+```
 
 ## SMART MIC CLICK
 
+Component description: https://www.mikroe.com/smart-mic-click
+Acoustic processor datasheet: http://download.mikroe.com/documents/datasheets/IA611_datasheet.pdf
+
 ## THUMBSTICK CLICK
+
+Component description: https://www.mikroe.com/thumbstick-click
 Datasheet zum A/D-Converter: http://ww1.microchip.com/downloads/en/devicedoc/21298e.pdf
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/0f322c96-dc77-45bc-84b7-314389b9e4e5)
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/a62aaf96-48f6-445b-9fe0-92962d6ceb10)
@@ -223,7 +248,37 @@ void print_roll_pitch_yaw() {
 
 ## PROXIMITY 18 CLICK
 
+Datasheet: https://download.mikroe.com/documents/datasheets/VCNL3036X01_datasheet.pdf
+Install library: https://github.com/JenertsA/VCNL3040_Proximity_Sensor_Library (Available in Library Manager of Arduino Ide. Search: VCNL3040)
+**NOTE: Go to VCNL3040.h and change VCNL3040_DEV_ADDRESS from 0x60 to 0x41.**
+
+Code example (read proximity value):
+
+```c++
+#include <VCNL3040.h>
+#include <Wire.h>
+
+VCNL3040 sens;
+
+void setup()
+{
+  Serial.begin(9600);
+  Wire.begin();
+  sens.begin();
+  sens.startReading();
+}
+
+void loop()
+{
+  unsigned int dist_raw = sens.readPSData();
+  Serial.println(dist_raw);
+  delay(100);
+}
+```
+
 ## RADAR CLICK
+
+Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
 
 ## MikroSDK
 https://github.com/MikroElektronika/mikrosdk_click_v2
