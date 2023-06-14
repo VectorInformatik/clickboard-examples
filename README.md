@@ -53,13 +53,6 @@ See https://learn.adafruit.com/adafruit-feather-m4-can-express/arduino-ide-setup
 Component description: https://www.mikroe.com/touchpad-4-click
 Controller datasheet: https://www.azoteq.com/images/stories/pdf/iqs7211a_datasheet.pdf
 
-Code example (read gestures):
-
-```c++
-
-```
-
-
 ## OLED C CLICK
 
 Component description: https://www.mikroe.com/oled-c-click
@@ -453,12 +446,6 @@ void loop()
 
 Component description: https://www.mikroe.com/radar-click
 Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
-
-Code example:
-
-```c++
-
-```
 
 ## MikroSDK
 Libraries for click boards by MIKROE (**NOT compatible with our board but can be useful**): https://github.com/MikroElektronika/mikrosdk_click_v2
