@@ -1,1 +1,1 @@
-PlatformIO Template für Forum industrielle Praxis.
+Arduin IDE Template für Forum industrielle Praxis.

@@ -1,12 +1,12 @@
 #include <Arduino.h>
 
-#include <CANCommunication.h>
+#include "lib/CANCommunication.h"
 
 long currentMillis = 0;
 
 void setup() {
-  Serial.begin(115200);
-  //while (!Serial) delay(10);
+  Serial.begin(9600);
+  while (!Serial) delay(10);
   setupCANCommunication();
 }
 
@@ -24,6 +24,7 @@ void loop() {
     w_c2.y = r_c2.y + 1;
     w_c2.z = r_c2.z + 1;
     packetWaiting = false;
+    Serial.println("Processed received message!");
   }
 
   // put your code to update the outgoing coordinates
