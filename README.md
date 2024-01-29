@@ -62,7 +62,7 @@ Code example (not perfect):
 
 #define ADDR 0x56
 #define INT_PIN 11 // for microBUS 1
-//define INT_PIN 18 // for microBUS 2
+// #define INT_PIN 18 // for microBUS 2
 
 #define LEFT 0
 #define RIGHT 1
