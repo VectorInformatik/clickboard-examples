@@ -61,7 +61,8 @@ Code example (not perfect):
 #include <Wire.h>
 
 #define ADDR 0x56
-#define INT_PIN 18
+#define INT_PIN 11 // for microBUS 1
+//define INT_PIN 18 // for microBUS 2
 
 #define LEFT 0
 #define RIGHT 1
@@ -79,6 +80,7 @@ Code example (not perfect):
 #define ADDR_TOUCH_STRENGTH 0x16
 #define ADDR_FINGER_AREA 0x17
 
+volatile bool gestureRegistered = false;
 
 int readRegister(int addr)
 {
@@ -132,31 +134,7 @@ int readFingerY()
 
 void ISR()
 {
-  int gesture = readGestures();
-
-  switch (gesture)
-  {
-    case LEFT:
-      Serial.println("Left");
-      break;
-    case RIGHT:
-      Serial.println("Right");
-      break;
-    case UP:
-      Serial.println("Up");
-      break;
-    case DOWN:
-      Serial.println("Down");
-      break;
-    case SINGLE_TAP:
-      Serial.println("Single tap");
-      break;
-    case PRESS_AND_HOLD:
-      Serial.println("Press and hold");
-      break;
-    default:
-      break;
-  }
+  gestureRegistered = true;
 }
 
 void setup()
@@ -176,7 +154,36 @@ void setup()
 
 void loop()
 {
-  
+  if (gestureRegistered)
+  {
+    int gesture = readGestures();
+
+    switch (gesture)
+    {
+      case LEFT:
+        Serial.println("Left");
+        break;
+      case RIGHT:
+        Serial.println("Right");
+        break;
+      case UP:
+        Serial.println("Up");
+        break;
+      case DOWN:
+        Serial.println("Down");
+        break;
+      case SINGLE_TAP:
+        Serial.println("Single tap");
+        break;
+      case PRESS_AND_HOLD:
+        Serial.println("Press and hold");
+        break;
+      default:
+        break;
+    }
+
+    gestureRegistered = false;
+  }
 }
 ```
 
@@ -197,13 +204,21 @@ Code example (draw different shapes):
 #define SCREEN_WIDTH  128
 #define SCREEN_HEIGHT 128
 
-// Using Microbus 2
+// Using Microbus 1
 #define SCLK_PIN 25
 #define MOSI_PIN 24
-#define DC_PIN   13
-#define CS_PIN   10
-#define RST_PIN  12
-#define EN_PIN   11
+#define DC_PIN   17
+#define CS_PIN   19
+#define RST_PIN  16
+#define EN_PIN   18
+
+// // Using Microbus 2
+// #define SCLK_PIN 25
+// #define MOSI_PIN 24
+// #define DC_PIN   13
+// #define CS_PIN   10
+// #define RST_PIN  12
+// #define EN_PIN   11
 
 // Color definitions
 #define	BLACK           0x0000
@@ -330,12 +345,22 @@ Thumbstick Layout:
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/7353b62a-c660-4fb1-bcbb-728389c9526b)
 
 
-Code example (read thumbstick input):
+Code example (read thumbstick and button input):
 
 ```c++
 #include <SPI.h>
 
-#define CS_PIN 10
+// For microBUS 1
+#define CS_PIN 19
+#define THUMBSTICK_BUTTON_PIN 18
+
+// // For microBUS 2
+// #define CS_PIN 10
+// #define THUMBSTICK_BUTTON_PIN 11
+
+#define DEBOUNCE_TIME_MS 10
+
+volatile unsigned long lastButtonPress = 0;
 
 int read_thumbstick(int channel) {
   int value = 0;
@@ -385,12 +410,26 @@ void get_user_input()
   Serial.println();
 }
 
+void onThumbstickPressed()
+{
+  // Debouncing
+  unsigned long now = millis();
+  if ((now - lastButtonPress) < DEBOUNCE_TIME_MS) return;
+
+  Serial.println("Pressed thumbstick");
+  
+  lastButtonPress = now;
+}
+
 void setup()
 {
   Serial.begin(9600);
 
   SPI.begin();
+
   pinMode(CS_PIN, OUTPUT);
+  pinMode(THUMBSTICK_BUTTON_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(THUMBSTICK_BUTTON_PIN), onThumbstickPressed, FALLING);
 }
 
 void loop()
@@ -517,7 +556,8 @@ Code example:
 ```c++
 #include <Adafruit_NeoPixel.h>
 
-#define PIN A3
+#define PIN 17 // For microBUS 1
+// #define PIN 13 // For microBUS 2
 #define NUM_PIXELS 100
 
 Adafruit_NeoPixel LEDs(NUM_PIXELS, PIN, NEO_GRB + NEO_KHZ800);
