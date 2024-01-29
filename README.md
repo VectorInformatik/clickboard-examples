@@ -11,6 +11,7 @@
     * [SMART MIC CLICK](#smart-mic-click)
     * [THUMBSTICK CLICK](#thumbstick-click)
     * [8800 RETRO CLICK](#8800-retro-click)
+    * [10x10 RGB CLICK](#10x10-rgb-click)
     * [MPU 9DOF CLICK](#mpu-9dof-click)
     * [PROXIMITY 18 CLICK](#proximity-18-click)
     * [RADAR CLICK](#radar-click)
@@ -502,6 +503,51 @@ void loop()
   delay(400);
   show(characterTwo);
   delay(400);
+}
+```
+
+## 10x10 RGB CLICK
+
+Component description: https://www.mikroe.com/10x10-rgb-click
+
+LED library (can be directly installed in ArduinoIDE or PlatformIO): https://github.com/adafruit/Adafruit_NeoPixel
+
+Code example:
+
+```c++
+#include <Adafruit_NeoPixel.h>
+
+#define PIN A3
+#define NUM_PIXELS 100
+
+Adafruit_NeoPixel LEDs(NUM_PIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  // Start LEDs
+  LEDs.begin();
+
+  // Clear all LEDs
+  LEDs.clear();
+
+  // Set brightness of all LEDs. [0, 255]
+  LEDs.setBrightness(40);
+}
+
+void loop() {
+  for(int i=0; i<NUM_PIXELS; i++) {
+    // Set color of individual LED
+    LEDs.setPixelColor(i, LEDs.Color(255-(2*i), 150, i*2));
+    // Write to hardware, else nothing would show
+    LEDs.show();
+    delay(20);
+  }
+  for(int i=0; i<NUM_PIXELS; i++) {
+    // Set color of individual LED
+    LEDs.setPixelColor(i, LEDs.Color(0, 0, 0));
+    // Write to hardware, else nothing would show
+    LEDs.show();
+    delay(20);
+  }
 }
 ```
 
