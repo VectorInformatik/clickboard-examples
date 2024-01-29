@@ -200,9 +200,17 @@ Library: https://github.com/adafruit/Adafruit-SSD1351-library (Can be found in L
 Code example (draw different shapes):
 
 ```c++
-// Screen dimensions. True dimensions are 96x96. This is a workaround
-#define SCREEN_WIDTH  128
-#define SCREEN_HEIGHT 128
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1351.h>
+#include <SPI.h>
+
+
+
+// Definitions for display offsets. Always set pixels only within this range, otherwise they will be off-screen. (This is because the available library doesn't support our resolution)
+#define MIN_X  16
+#define MIN_Y 0
+#define MAX_X  111
+#define MAX_Y 95
 
 // Using Microbus 1
 #define SCLK_PIN 25
@@ -222,92 +230,51 @@ Code example (draw different shapes):
 
 // Color definitions
 #define	BLACK           0x0000
-#define	BLUE            0x001F
-#define	RED             0xF800
-#define	GREEN           0x07E0
-#define CYAN            0x07FF
-#define MAGENTA         0xF81F
-#define YELLOW          0xFFE0  
 #define WHITE           0xFFFF
+#define	BLUE            0xF800
+#define	RED             0x001F
+#define	GREEN           0x07E0
+#define YELLOW          0x07FA
+#define PURPLE          0xF81F
 
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1351.h>
-#include <SPI.h>
-
-Adafruit_SSD1351 tft = Adafruit_SSD1351(SCREEN_WIDTH, SCREEN_HEIGHT, CS_PIN, DC_PIN, MOSI_PIN, SCLK_PIN, RST_PIN);  
-
-//Adafruit_SSD1351 tft = Adafruit_SSD1351(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, CS_PIN, DC_PIN, RST_PIN);
-
-//Adafruit_SSD1351 tft = Adafruit_SSD1351(CS_PIN, DC_PIN, MOSI_PIN, SCLK_PIN, RST_PIN);  
+Adafruit_SSD1351 tft = Adafruit_SSD1351(128, 128, CS_PIN, DC_PIN, MOSI_PIN, SCLK_PIN, RST_PIN);  
 
 void testOLED()
 {
-  // Single pixel
-  tft.drawPixel(tft.width()/2, tft.height()/2, GREEN);
-  delay(3000);
-
+  // Single pixels
   tft.fillScreen(BLACK);
-
-  // lines
-  for (uint16_t x=0; x < tft.width()-1; x+=6) {
-    tft.drawLine(0, 0, x, tft.height()-1, WHITE);
-  }
-  delay(3000);
-
-  tft.fillScreen(BLACK);
-
-  // fast lines
-  for (uint16_t y=0; y < tft.height()-1; y+=5) {
-    tft.drawFastHLine(0, y, tft.width()-1, WHITE);
-  }
-  delay(3000);
-
-  tft.fillScreen(BLACK);
-
-  // text
-  tft.setCursor(0,0);
-  tft.setTextColor(WHITE);
-  tft.print("Hi my name is max");
-  delay(3000);
-
-  tft.fillScreen(BLACK);
-
-  // rectangles
-  for (uint16_t x=0; x < tft.height()-1; x+=6) {
-    tft.drawRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, WHITE);
-  }
-  delay(3000);
-
-  tft.fillScreen(BLACK);
-
-  // fill rectangles
-  for (uint16_t x=tft.height()-1; x > 6; x-=6) {
-    tft.fillRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, WHITE);
-    tft.drawRect((tft.width()-1)/2 -x/2, (tft.height()-1)/2 -x/2 , x, x, GREEN);
-  }
-  delay(3000);
-
-  tft.fillScreen(BLACK);
-
-  uint8_t radius = 4;
-
-  // circles
-  for (uint8_t x=0; x < tft.width()-1+radius; x+=radius*2) {
-    for (uint8_t y=0; y < tft.height()-1+radius; y+=radius*2) {
-      tft.drawCircle(x, y, radius, WHITE);
+  for(int i = MIN_X; i <= MAX_X; i++)
+  {
+    for (int j = MIN_Y; j <= MAX_Y; j++)
+    {
+      tft.drawPixel(i, j, WHITE);
+      delay(1);
     }
   }
-  delay(3000);
 
-  // fill circles
   tft.fillScreen(BLACK);
 
-  for (uint8_t x=radius; x < tft.width()-1; x+=radius*2) {
-    for (uint8_t y=radius; y < tft.height()-1; y+=radius*2) {
-      tft.fillCircle(x, y, radius, WHITE);
-    }
-  }  
+  // line
+  tft.drawLine(MIN_X, MIN_Y, MAX_X, MAX_Y, WHITE);
   delay(3000);
+
+  tft.fillScreen(BLACK);
+
+  // rectangle
+  tft.drawRect(50, 50, 20, 20, YELLOW);
+  delay(3000);
+  // fill it
+  tft.fillRect(50, 50, 20, 20, YELLOW);
+  delay(3000);
+
+  // circle
+  tft.drawCircle(40, 40, 15, BLUE);
+  delay(3000);
+  // fill it
+  tft.fillCircle(40, 40, 15, BLUE);
+  delay(3000);
+
+  tft.fillScreen(BLACK);
 }
 
 
