@@ -1,55 +1,37 @@
-**This file provides useful information on how to use the feather click shield**
+# Clickboard examples
 
-# Contents
-1. [Arduino IDE setup](#arduino-ide-setup)
-2. [Board setup](#board-setup)
-3. [References](#references)
-    * [Feather Click Shield](#feather-click-shield)
-    * [Adafruit Feather M4 CAN](#adafruit-feather-m4-can)
-    * [TOUCHPAD 4 CLICK](#touchpad-4-click)
-    * [OLED C CLICK](#oled-c-click)
-    * [SMART MIC CLICK](#smart-mic-click)
-    * [THUMBSTICK CLICK](#thumbstick-click)
-    * [8800 RETRO CLICK](#8800-retro-click)
-    * [10x10 RGB CLICK](#10x10-rgb-click)
-    * [MPU 9DOF CLICK](#mpu-9dof-click)
-    * [PROXIMITY 18 CLICK](#proximity-18-click)
-    * [RADAR CLICK](#radar-click)
-    * [MikroSDK](#mikrosdk)
-    * [I2C Scanner](#i2c-scanner)
+## Contents
+1. [Feather Click Shield](#feather-click-shield)
+2. [Adafruit Feather M4 CAN](#adafruit-feather-m4-can)
+3. [TOUCHPAD 4 CLICK](#touchpad-4-click)
+4. [OLED C CLICK](#oled-c-click)
+5. [SMART MIC CLICK](#smart-mic-click)
+6. [THUMBSTICK CLICK](#thumbstick-click)
+7. [8800 RETRO CLICK](#8800-retro-click)
+8. [10x10 RGB CLICK](#10x10-rgb-click)
+9. [MPU 9DOF CLICK](#mpu-9dof-click)
+10. [PROXIMITY 18 CLICK](#proximity-18-click)
+11. [RADAR CLICK](#radar-click)
+12. [MikroSDK](#mikrosdk)
+13. [I2C Scanner](#i2c-scanner)
 
-# Arduino IDE setup
-
-1. Got to `File > Preferences` and enter `https://adafruit.github.io/arduino-board-index/package_adafruit_index.json` into the **Additional Boards Manager URLs**.
-2. Click `OK`.
-3. Install `Adafruit SAMD Boards` in the **Boards Manager**.
-4. Click `Tools > Board > Adafruit SAMD Boards` and selecte the `Adafruit Feather M4 CAN`.
-
-See https://learn.adafruit.com/adafruit-feather-m4-can-express/arduino-ide-setup for more information.
-
-# Board setup
-
-1. Place your `Adafruit feather M4 CAN` in the center of the `Feather click shield`.
-2. Place your `Click Boards` into the `mikroBUS` sockets.
-3. Connect a USB-C cable into to your computer and directly to the `Feather M4 CAN` (the **upper** USB-C port).
-
-# References
+## Examples
 
 **This section provides useful links, images and code snippets for every component and click board.**
 
-## Feather Click Shield
+### Feather Click Shield
 
 **Pinout of the feather click shield:**
 
 ![grafik](https://www.mikroe.com/img/images/feather-inner-2.png)
 
-## Adafruit Feather M4 CAN 
+### Adafruit Feather M4 CAN 
 
 **Pinout of the adafruit feather m4 can:**
 
 ![grafik](https://github.com/VectorInformatik/clickboard-examples/assets/136338757/4107adeb-8cf2-4803-934a-0be1f3d37a52)
 
-## TOUCHPAD 4 CLICK
+### TOUCHPAD 4 CLICK
 
 Component description: https://www.mikroe.com/touchpad-4-click
 
@@ -187,7 +169,7 @@ void loop()
 }
 ```
 
-## OLED C CLICK
+### OLED C CLICK
 
 Component description: https://www.mikroe.com/oled-c-click
 
@@ -293,13 +275,13 @@ void loop() {
 }
 ```
 
-## SMART MIC CLICK
+### SMART MIC CLICK
 
 Component description: https://www.mikroe.com/smart-mic-click
 
 Acoustic processor datasheet: http://download.mikroe.com/documents/datasheets/IA611_datasheet.pdf
 
-## THUMBSTICK CLICK
+### THUMBSTICK CLICK
 
 Component description: https://www.mikroe.com/thumbstick-click
 
@@ -406,7 +388,7 @@ void loop()
 }
 ```
 
-## 8800 RETRO CLICK
+### 8800 RETRO CLICK
 
 Component description: https://www.mikroe.com/8800-retro-click
 
@@ -512,7 +494,7 @@ void loop()
 }
 ```
 
-## 10x10 RGB CLICK
+### 10x10 RGB CLICK
 
 Component description: https://www.mikroe.com/10x10-rgb-click
 
@@ -559,7 +541,7 @@ void loop() {
 ```
 
 
-## MPU 9DOF CLICK
+### MPU 9DOF CLICK
 
 Component description: https://www.mikroe.com/mpu-9dof-click
 
@@ -596,7 +578,7 @@ void print_roll_pitch_yaw() {
 }
 ```
 
-## PROXIMITY 18 CLICK
+### PROXIMITY 18 CLICK
 
 Component description: https://www.mikroe.com/proximity-18-click
 
@@ -629,17 +611,17 @@ void loop()
 }
 ```
 
-## RADAR CLICK
+### RADAR CLICK
 
 Component description: https://www.mikroe.com/radar-click
 
 Datasheet: https://download.mikroe.com/documents/datasheets/MM5D91-00_datasheet.pdf
 
-## MikroSDK
+### MikroSDK
 
 Libraries for click boards by MIKROE (**NOT compatible with our board but can be useful**): https://github.com/MikroElektronika/mikrosdk_click_v2
 
-## I2C scanner
+### I2C scanner
 
 Run this code snipped to get the i2c addresses of the connected devices:
 

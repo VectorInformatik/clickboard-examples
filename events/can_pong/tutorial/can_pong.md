@@ -42,10 +42,16 @@ These parameters are related to the specific player.
 | Player 2: x-coordinate of bottom **left** of paddle | 250 |  |
 | Initial y-coordinate of **bottom** left of paddle | 65 | This value is only reset once the game is finished. |
 | Range of y-coordinate of **bottom** of paddle | 0 to 130 | Never let your paddle get out of range or else it will be out of sync with the servers position of your paddle |
-| Paddle update range per frame | -2 to +2 | Every frame, the paddle of a player can only be updated by a value in this range. |
+| Paddle update values | -1, 0, 1 | Every frame, the paddle of a player can only be updated by one of these values. |
 
 
-### CAN messages
+### CAN messages & setup
+
+#### CAN setup
+
+The CAN library github with examples: [Adafruit_CAN](https://github.com/adafruit/Adafruit_CAN)
+
+The baudrate of the CAN bus is **250000 kbps**.
 
 #### Frames from the game server
 
