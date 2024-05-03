@@ -85,7 +85,7 @@ Send this frame to update your paddle if you are player 1.
 ##### Frame
 | ID | Byte0 |
 | - | - |
-| 0x02 | `int8_t`: **paddle update** (The value to move the paddle. **Must be between -2 and +2**) |
+| 0x02 | `int8_t`: **paddle update** (The value to move the paddle. **Must be either -1, 0 or 1**) |
 
 #### Player 2 control frame
 
@@ -96,4 +96,4 @@ Send this frame to update your paddle if you are player 2.
 ##### Frame
 | ID | Byte0 |
 | - | - |
-| 0x03 | `int8_t`: **paddle update** (The value to move the paddle. **Must be between -2 and +2**) |
+| 0x03 | `int8_t`: **paddle update** (The value to move the paddle. **Must be either -1, 0 or 1**) |
