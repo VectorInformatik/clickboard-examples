@@ -61,13 +61,14 @@ It provides the current game state and the position of the ball.
 
 | Value | Description |
 | - | - |
-| 3 | No player scored a point. The ball will get reset. |
+| 77 | **Game start.** This is only sent once to indicate the start of a new game. |
+| 3 | No player scored a point due to timeout. The ball will get reset. |
 | 2 | Player 2 scored a point. The ball will get reset. |
 | 1 | Player 1 scored a point. The ball will get reset. |
 | 0 | The game is running. |
-| -1 | Game over. Player 1 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
-| -2 |  Game over. Player 2 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
-| -3 |  Game over. No winner. The entire game is reset (including the initial paddle positions). |
+| -1 | **Game over.** Player 1 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
+| -2 |  **Game over.** Player 2 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
+| -3 |  **Game over.** No winner. The entire game is reset (including the initial paddle positions). |
 
 #### Player 1 control frame
 
