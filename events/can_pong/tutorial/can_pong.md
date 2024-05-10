@@ -12,8 +12,12 @@ If the ball reflects from a paddle, it doesn't simply reflect with equal but inv
 
 ## Game logic
 
-You win if you reach 5 points first.
-If 3 draws due to a timeout occur, the player with more points wins. If both still have the same number of points, the whole game is a draw.
+You win if you reach 5 points first, but...
+
+
+If after 30 seconds no player scored, the ball is reset.
+If this happens 3 times the player with more points wins.
+If both still have the same number of points, the whole game is a draw.
 
 ![Game Logic](media/game_logic.png)
 
