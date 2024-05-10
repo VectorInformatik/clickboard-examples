@@ -61,7 +61,7 @@ It provides the current game state and the position of the ball.
 ##### Frame
 | ID | Byte0 | Byte1 | Byte2 |
 | - | - | - | - |
-| 0x01 | `uint8_t`: **ball x-coordinate** (bottom left of ball) | `uint8_t`: **ball y-coordinate** (bottom left of ball) | `int8_t`: **game state** |
+| 0x01 | `uint8_t`: **ball x-coordinate** (bottom left of ball) | `uint8_t`: **ball y-coordinate** (bottom left of ball) | `uint8_t`: **game state** |
 
 ###### Possible values for game state
 
@@ -73,27 +73,17 @@ It provides the current game state and the position of the ball.
 | 3 | Player 2 scored a point. The ball will get reset. |
 | 4 | No player scored a point due to timeout. The ball will get reset. |
 | 5 | **Game over.** Player 1 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
-| 6 |  **Game over.** Player 2 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
-| 7 |  **Game over.** No winner. The entire game is reset (including the initial paddle positions). |
+| 6 | **Game over.** Player 2 won the game (score of 5 reached). The entire game is reset (including the initial paddle positions). |
+| 7 | **Game over.** No winner. The entire game is reset (including the initial paddle positions). |
 
-#### Player 1 control frame
+#### Player control frame
 
-Send this frame to update your paddle if you are player 1.
+Send this frame to update your paddle. The id changes depending on whether you're player 1 or player 2.
 **Send this only once every game-tick (after you received an update from the server)**
 `If you send this frame multiple times between two frames from the server, only the first one you sent will be read by the server.`
+**You are not required to send this every game-tick. If your paddle is already in the correct position there is no need to send a update value of `0`.**
 
 ##### Frame
 | ID | Byte0 |
 | - | - |
-| 0x02 | `int8_t`: **paddle update** (The value to move the paddle. **Must be either -1, 0 or 1**) |
-
-#### Player 2 control frame
-
-Send this frame to update your paddle if you are player 2.
-**Send this only once every game-tick (after you received an update from the server)**
-`If you send this frame multiple times between two frames from the server, only the first one you sent will be read by the server.`
-
-##### Frame
-| ID | Byte0 |
-| - | - |
-| 0x03 | `int8_t`: **paddle update** (The value to move the paddle. **Must be either -1, 0 or 1**) |
+| 0x02 / 0x03  (for player 1 / player 2) | `int8_t`: **paddle update** (The value to move the paddle. **Must be either -1, 0 or 1**) |
