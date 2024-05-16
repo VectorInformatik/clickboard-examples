@@ -25,7 +25,6 @@ bool setupCan(long baudRate)
         success = false;
     }
     return success;
-    return true;
 }
 
 uint8_t data[3];
