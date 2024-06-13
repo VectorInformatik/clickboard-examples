@@ -434,6 +434,25 @@ void show(byte data[]) {
   }
 }
 
+uint16_t getKeypad() {
+    byte tmp_data[2] = { 0 };
+    Wire.beginTransmission(i2c_addr);
+    Wire.write(0x1c);
+    Wire.endTransmission();
+    Wire.requestFrom(i2c_addr, 2);
+    
+    if (Wire.available() == 2) {
+        // Read the two bytes
+        tmp_data[0] = Wire.read();
+        tmp_data[1] = Wire.read();
+    } else {
+        return 0;
+    }
+
+    uint16_t keypad = ( (uint16_t) tmp_data[0] << 8 ) | tmp_data[1];
+    return ~keypad;
+}
+
 
 void setup()
 {
