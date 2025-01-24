@@ -12,6 +12,7 @@ Copy the following code into your project to get started:
 #include "CANSAME5x.h"
 
 #define BAUDRATE 500000
+#define SEND_DELAY_MS 10
 
 // Uncomment your team here ************************************************************************
 // #define TEAM_1
@@ -61,6 +62,8 @@ struct Pdu {
 
 CANSAME5x CAN;
 volatile bool newDataReceived = false;
+bool sendEnabled = false;
+unsigned long nextSendTimestamp;
 Pdu previousTeamPdu(PREVIOUS_TEAM_CAN_ID, PREVIOUS_TEAM_CAN_FRAME_BYTE_COUNT);
 Pdu yourTeamPdu(YOUR_TEAM_CAN_ID, YOUR_TEAM_CAN_FRAME_BYTE_COUNT);
 
@@ -108,6 +111,8 @@ void setup() {
     }
     CAN.onReceive(onReceivedDataFromOtherTeam);
     newDataReceived = false;
+    sendEnabled = false;
+    nextSendTimestamp = millis();
 
     // Put your setup code below *******************************************************************
     
@@ -118,10 +123,14 @@ void setup() {
 
 
 void loop() {
-    if (newDataReceived) {    
+    if (newDataReceived) {
+        // Don't change the next 3 lines
         newDataReceived = false;
+        sendEnabled = true;
+        nextSendTimestamp = millis() + SEND_DELAY_MS;
         
-        // Your code goes below ************************************************************************
+        // Example code below **********************************************************************
+        // Feel free to do whatever you want here
 
         // Example: Extract previous team data
         int8_t byte0 = previousTeamPdu.data[0];
@@ -140,12 +149,20 @@ void loop() {
         // Example: Package data
         yourTeamPdu.data[0] = myData0;
         yourTeamPdu.data[1] = myData1;
+    }
+
+    // Do whatever you want here
 
 
-        // *********************************************************************************************
 
-        delay(10);
-        sendCAN(&yourTeamPdu);
+
+
+    // Sending CAN frame. Don't change this!
+    if (sendEnabled) {
+        if (millis() > nextSendTimestamp) {
+            sendEnabled = false;
+            sendCAN(&yourTeamPdu);
+        }
     }
 }
 
