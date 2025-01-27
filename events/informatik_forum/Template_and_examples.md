@@ -354,6 +354,7 @@ void print_roll_pitch_yaw() {
 
 Product website: https://www.mikroe.com/proximity-18-click
 Library:  VCNL3040 (by Andris Jenerts)
+IMPORTANT!!! in VCNL3040.h set VCNL3040_DEV_ADDRESS to 0x41
 
 Code example:
 
